@@ -2,8 +2,7 @@ import requests
 import yfinance as yf
 import sys
 import os
-sys.path.insert(0, os.path.abspath('../Company Report Generator/utils'))
-from resolve_ticker import _resolve_ticker
+from utils.resolve_ticker import _resolve_ticker
 
 HEADERS = {
     "User-Agent": "Ricoh USA jonathan.lin@ricoh-usa.com"
