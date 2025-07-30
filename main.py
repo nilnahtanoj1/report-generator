@@ -4,6 +4,7 @@
 #from data_fetchers.competitors import get_competitors
 from llm.summarizer import generate_persona_insight
 from output.report_generator import generate_report
+from llm.researcher import generate_research
 
 def main(company_name, persona):
     # overview = get_company_overview(company_name)
@@ -12,199 +13,179 @@ def main(company_name, persona):
     # competitors = get_competitors(company_name)
     
 
-    overview = """🏢 Company Overview
+    overview = generate_research(company_name)
+    news = """📰 Recent News Highlights
+Underwriting Profit Turns Positive in 2024
 
-    Name: Amazon.com, Inc.
+In 2024, American Family Insurance reversed losses from previous years, reporting a combined ratio of 96.6%, down from 110.8% in 2023. The company earned an underwriting profit of $603 million and total revenue increased to $20.0 billion, largely driven by premium rate increases and investment income. Direct written premiums rose 13.9% to $19.6 billion
+PR Newswire+15newsroom.amfam.com+15newsroom.amfam.com+15
+.
+Moody’s Rating Downgrade with Stable Outlook
 
-    Founded: July 5, 1994
+In May 2024, Moody’s downgraded American Family’s Insurance Financial Strength (IFS) rating from A1 to A2, citing recent net losses and higher capital strain. However, the outlook remains stable, with positive signs from improved underwriting and expense reductions
+ReinsuranceNe.ws
+.
+Raising the Wage Floor
 
-    Founder: Jeff Bezos
+Effective January 1, 2025, American Family raised its minimum hourly pay to $25, its third increase since 2020. This move supports recruitment and retention across agency and customer-facing roles and is part of broader employee benefit improvements, including expanded parental leave
+newsroom.amfam.com+1Carrier Management+1
+.
+New Partnership with Empathy Platform
 
-    Headquarters: Seattle, Washington, USA (though recently expanding to other HQs like Arlington, Virginia)
+On April 23, 2025, the company announced a collaboration between American Family Insurance Life Company and Empathy. It offers beneficiaries of life insurance policies complimentary access to grief, care, and administrative support services
+newsroom.amfam.com
+.
+Disaster Relief and Community Aid
 
-    CEO (as of 2025): Andy Jassy (since July 2021, following Jeff Bezos)
+American Family responded to severe hailstorms and tornadoes by providing emergency assistance. In April 2025, it offered direct support to affected customers in Wisconsin and Missouri, through both financial aid and partnerships via the Dreams Foundation
+newsroom.amfam.com
+.
+Spin-Off of PropTech Startup Fixle
 
-📦 Core Business Segments
+Fixle, Inc. — a platform formerly incubated within American Family Insurance — was launched as an independent PropTech startup in February 2024. American Family Ventures remains a minority investor in the company, which offers streamlined home maintenance and management solutions
+ReinsuranceNe.ws
+PR Newswire
+.
+PGA TOUR Champions: New Format & Venue
 
-    E-Commerce
+The American Family Insurance Championship will adopt a team-style “scramble” format for the 2025 PGA TOUR Champions event and move to TPC Wisconsin in Madison. The three-day event takes place June 6–8 and features a $3M purse
+AmFam Championship
+.
+Internal Practice Controversy
 
-        Started as an online bookstore.
+American Family has tied claims adjuster compensation—including performance ratings and job security—to the percentage of repairs sent to shops in its Direct Repair Program (DRP). Though internal pushback flagged compliance risks, the practice persisted into 2025
+Reddit
+."""
+    financials = """Q1 2025 (Quarter Ended March 31, 2025)
 
-        Now sells everything from electronics and clothing to groceries and furniture.
-
-        Operates retail websites for several countries and sells globally.
-
-    Amazon Web Services (AWS)
-
-        Launched in 2006.
-
-        Cloud computing platform — offers storage, servers, databases, machine learning, and more.
-
-        One of Amazon’s most profitable divisions.
-
-    Amazon Prime
-
-        Subscription service ($/month or annually).
-
-        Offers free/fast shipping, Prime Video, Prime Music, and other perks.
-
-        Over 200 million members globally.
-
-    Digital Media & Devices
-
-        Products like Kindle, Echo (Alexa), Fire TV, and tablets.
-
-        Develops original content via Amazon Studios for Prime Video.
-
-    Logistics & Fulfillment
-
-        Owns and operates warehouses, delivery trucks, aircraft, and drones.
-
-        Has built a massive last-mile delivery network that rivals traditional carriers.
-
-    Physical Stores
-
-        Owns Whole Foods Market (acquired in 2017).
-
-        Amazon Go (checkout-free stores) and Amazon Fresh (grocery).
-
-    Advertising
-
-        Offers targeted ads based on shopping and browsing behavior.
-
-        Fast-growing revenue stream, often compared with Google and Meta ads.
-
-🌍 Global Reach
-
-    Operates marketplaces in over a dozen countries.
-
-    Ships to over 100 countries worldwide.
-
-    Faces strong local competition in places like China and India.
-
-💰 Financial Highlights (as of late 2024)
-
-    Market Cap: Over $1.7 trillion (fluctuates with market).
-
-    Employees: ~1.5 million.
-
-    Revenue: Over $500 billion annually.
-
-    Profit Drivers: AWS, Advertising, and Prime.
-
-🔍 Controversies & Criticisms
-
-    Labor practices and warehouse working conditions.
-
-    Antitrust investigations in the U.S. and EU.
-
-    Environmental impact and sustainability challenges.
-
-    Market dominance affecting small businesses.
-
-🧭 Mission Statement
-
-    "To be Earth’s most customer-centric company, where customers can find and discover anything they might want to buy online.""
-
-"""
-    news = """1. Q2 2025 Earnings Preview
-
-    Amazon is set to release its Q2 2025 earnings on July 31, with investor attention on whether last quarter’s strong performance was repeatable. Analysts anticipate earnings per share of $1.33 and ~9.5–10% revenue growth, projecting revenue around $162 billion and ~17% growth in AWS revenue
-    Business Insider+15Reuters+15Reddit+15
-    Business Insider+3MarketWatch+3Investors.com+3
+    Net income: ~$74.2 million, or $0.71 per diluted share, up from $46.7 million (or $0.45 per share) a year ago
+    Reddit+7newsroom.amfam.com+7newsroom.amfam.com+7
+    SEC
     .
 
-    Competitor tension in AI and cloud services is mounting, as AWS faces pressure from Google and Microsoft
-    Business Insider+2Reuters+2MarketWatch+2
+    The company returned over $290 million to shareholders through dividends and share repurchases in Q1
+    SEC
     .
 
-2. Digital Advertising Shake-Up
-
-    Amazon abruptly halted its spending on Google Shopping ads globally as of July 2025, sending ripples through the advertising ecosystem
-    WebProNews
+    Management noted significant excess capital as of March 31, 2025, supporting continuing returns and reinvestment in the business
+    SEC
     .
 
-3. Pricing Transparency Probe
+📅 Q4 2024 (Full Year 2024 Highlights)
 
-    Senator Maggie Hassan has sent a letter to Amazon's CEO requesting internal data on grocery price hikes tied to tariffs, especially regarding impacts on SNAP shoppers. Amazon disputes the data used in the report and will respond by August 20 .
+    Total revenue: $20.0 billion, up 17% from 2023.
 
-4. Robotics Surge in UK Warehouses
+    Direct written premiums: $19.6 billion, up 13.9%.
 
-    Amazon plans to reach robot-to-human parity in its UK warehouses within three years, supported by a £40 billion investment. The shift is expected to automate repetitive tasks while reskilling workers .
+    Combined ratio (P&C): improved to 96.6%, reversing a loss-making trend from a combined ratio of 110.8% in 2023.
 
-5. Seller Feedback System Revamp
+    Underwriting profit (P&C): $603 million, compared to an underwriting loss of $1.7 billion in 2023.
 
-    Starting July 29, Amazon will no longer require written customer feedback for sellers—moving to a “star-only” rating system to streamline reviews .
+    Expense ratio: declined to 33.1%, roughly 3.9 points lower than the prior year.
 
-6. New Logistics Hub in Little Rock
+    Net income (after tax): $2.5 billion, a turnaround from a net loss of nearly $900 million in 2023.
 
-    On July 29, Amazon broke ground on a 930,000-ft² logistics facility in Arkansas, expected to create over 1,000 full-time jobs .
+    Members’ equity: grew to $10.6 billion, compared to $8.0 billion at the end of 2023.
 
-7. AI Licensing Deal with The New York Times
+    Total group assets: rose to about $42.2 billion
+    ycharts.com+5newsroom.amfam.com+5Carrier Management+5
+    Carrier Management
+    newsroom.amfam.com
+    .
 
-    Amazon signed a multi-year deal worth $20–25 million per year with The New York Times to license its content for AI training and integration into services like Alexa—marking a first for both the publisher and Amazon .
+    Life insurance segment gain from operations: $129 million, down slightly from $150 million in 2023.
 
-8. Prime Day 2025 Recap
+    Pretax investment income surged ~70% to $1.6 billion, including realized investment gains of $1.3 billion after a prior-year loss
+    Carrier Management+1newsroom.amfam.com+1
+    ."""
+    competitors = """1. State Farm
+Overview:
 
-    Amazon’s July Prime Day (July 8–11) was its biggest-ever, generating record U.S. e‑commerce spend: $7.9 billion on day one, and estimated $23.8 billion total for the four-day event .
+    Type: Mutual insurance company
 
-    Independent sellers, powered by exclusive launches like Alexa+, performed exceptionally well—reporting substantial visibility and sales growth """
+    Founded: 1922
 
+    Headquarters: Bloomington, Illinois
 
-    financials = """Q1 2025 Results (Reported May 1, 2025)
+    Employees: ~58,000
 
-    Net sales: $155.67 billion (+9% YoY), slightly beating expectations
-    Reddit+7Business Insider+7Financial Times+7
+    Annual Revenue (2024 est.): Over $104 billion
 
-    Earnings per share (EPS): $1.59, outperforming consensus estimates
-    Business Insider
+Why It Competes:
 
-    Operating income: $18.41 billion — well above forecasts, driven by retail strength, AWS, and advertising
-    Reddit+2Business Insider+2Reddit+2
+    Largest auto and home insurer in the U.S. by market share
 
-    Advertising revenue: grew ~19%, contributing meaningfully to margins
+    Massive network of ~19,000 exclusive agents
 
-    AWS revenue growth: ~17% YoY, slightly below expectations
+    Strong customer loyalty from brand recognition and wide agent footprint
 
-🔮 Q2 2025 Guidance (Expected on July 31, 2025)
+Key Strengths:
 
-    Projected net sales: $159 billion–$164 billion, up ~7–11% YoY vs. Q2 2024
+    Broad product suite: Auto, homeowners, renters, life, health, banking
 
-    Projected operating income: $13 billion–$17.5 billion, below analyst consensus (~$17.7 billion)
+    Highly competitive pricing, especially in auto
 
-📈 Analyst Expectations & Market Sentiment
+    Substantial surplus capital to weather catastrophic loss years
 
-    Revenue consensus: ~$162 billion (≈ +9% YoY)
+    Technologically enhanced claims and underwriting systems
 
-    EPS estimate: ~$1.33
+2. Allstate
+Overview:
 
-    AWS growth: around 17% YoY, remaining a key profit engine (~60% of company profit)
+    Type: Publicly traded (NYSE: ALL)
 
-    Analyst targets: Price targets range from $265 up to $300+, citing AWS/Cloud, Prime momentum, ad growth, and AI investments
+    Founded: 1931
 
-🧾 2024 Full-Year Financial Highlights
+    Headquarters: Northbrook, Illinois
 
-    Total revenue: $638 billion (+11% vs. prior year)
+    Employees: ~53,000
 
-        North America: $387 billion (+10%)
+    Annual Revenue (2024): $57.2 billion
 
-        International: $143 billion (+9%)
+Why It Competes:
 
-        AWS: $108 billion (+19%)
+    Strong national brand, especially in auto and homeowners insurance
 
-    Operating income: $68.6 billion (10.8% margin vs. 6.4% prior year)
+    Diversified with Encompass, Esurance, and new digital offerings
 
-    Free Cash Flow (adjusted): $36.2 billion (slightly improved over 2023)
+Key Strengths:
 
-⚠️ Key Drivers & Risks
+    Rapid digital transformation and use of AI for pricing and claims
 
-    Tariff-related headwinds: Amazon cited trade war uncertainty, particularly U.S.–China tariffs, as a risk to e-commerce profitability. Some sellers stockpiled inventory or negotiated discounts to mitigate impacts
+    Expanding direct-to-consumer models, reducing dependence on agents
 
-    Capital expenditures: Amazon plans $100 billion of investment in 2025, particularly in AI-related infrastructure and Project Kuiper satellite ambitions
+    Strategic acquisitions in telematics and tech (e.g., Milewise)
 
-    AWS margin pressure: Operating margin is expected to decline in Q2 as AWS invests for scale; anticipated margin range ~28–39%, consensus ~37% for full year """
-    
-    competitors = "competitors"
+    Aggressive cost-cutting and focus on higher-margin segments
+
+3. Liberty Mutual
+Overview:
+
+    Type: Mutual insurance company
+
+    Founded: 1912
+
+    Headquarters: Boston, Massachusetts
+
+    Employees: ~45,000
+
+    Annual Revenue (2024 est.): $50–55 billion
+
+Why It Competes:
+
+    A top-tier personal and commercial lines insurer, with strong international presence
+
+    Operates under multiple brands including Safeco, a direct competitor to American Family’s nonstandard and digital lines
+
+Key Strengths:
+
+    Major commercial insurance business alongside strong personal lines
+
+    Strategic use of partners and independent agents
+
+    Strong catastrophe management and reinsurance structuring
+
+    Expanding global footprint (Latin America, Europe, Asia-Pacific)"""
 
     insights = generate_persona_insight(company_name, persona, overview, news, financials)
     

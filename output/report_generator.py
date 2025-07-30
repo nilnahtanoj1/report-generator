@@ -17,6 +17,6 @@ def generate_report(company_name, persona, overview, news, financials, competito
         f.write(str(financials) + "\n\n")
         
         f.write("## Competitors\n")
-        f.write(", ".join(competitors) + "\n\n")
+        f.write(str(competitors) + "\n\n")
         
     return filename
