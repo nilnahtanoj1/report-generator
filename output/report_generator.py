@@ -2,7 +2,7 @@ from datetime import datetime
 
 def generate_report(company_name, persona, overview, news, financials, competitors, insights):
     filename = f"output/{company_name}_{persona}_report.md"
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(f"Strategic Report for {company_name}\n")
         f.write(f"**Target Persona** {persona}\n")
         f.write(f"**Generated:** {datetime.now()}\n\n")
