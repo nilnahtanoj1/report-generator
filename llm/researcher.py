@@ -11,7 +11,7 @@ def generate_research(company):
     """
     
     prompt = f"""
-You are a research assistant. Answer the following questions about {company} to gather general information that would be helpful in undersatnding key aspects of a customer's business.
+You are a research assistant. Answer the following questions about {company}.
 
 1. Top 5 things to know about {company} including top customers for each business unit.
 2. How is the current geopolitical environment impacting {company}?
@@ -38,7 +38,7 @@ You are a research assistant. Answer the following questions about {company} to 
         response = client.chat.completions.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "You are a strategic B2B sales assistant."},
+                {"role": "system", "content": "You are a research assistant, whose job is to answer questions about a company."},
                 {"role": "user", "content": prompt}
                 ],
         
