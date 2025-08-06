@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import sys
 import os
 sys.path.insert(0, os.path.abspath('../Company Report Generator/utils'))
-from resolve_ticker import _resolve_ticker
+from utils.resolve_ticker import _resolve_ticker
 
 HEADERS = {
     "User-Agent": "Ricoh USA jonathan.lin@ricoh-usa.com"
@@ -17,16 +17,9 @@ def get_financial_data(company_name_or_ticker):
         yahoo_data = _get_yahoo_financials(ticker)
         sec_data = _get_sec_10q_summary(ticker)
         
-        return {
-            "ticker": ticker,
-            "market_cap": yahoo_data.get("market_cap"),
-            "revenue": yahoo_data.get("revenue"),
-            "net_income": yahoo_data.get("net_income"),
-            "eps": yahoo_data.get("eps"),
-            "filing_date": sec_data.get("filing_date"),
-            "filing_type": sec_data.get("filing_type"),
-            "filing_summary": sec_data.get("filing_summary"),
-            "filing_url": sec_data.get("url")
+        return {f"""{company_name_or_ticker}, or {ticker}, has a reported market cap of {yahoo_data.get("market_cap")}. 
+The reported net income is {yahoo_data.get("net_income")} and the reported EPS is {yahoo_data.get("eps")}. 
+The most recent {sec_data.get("filing_type")} SEC filing was on {sec_data.get("filing_date")}."""
         }
     
     except Exception as e:
@@ -120,8 +113,3 @@ def _get_income_statement_from_sec(cik, accession):
 
 def _summarize_sec_html(url, cik, accession):
     return _get_income_statement_from_sec(cik, accession)
-
-if __name__ == "__main__":
-    from pprint import pprint
-    result = get_financial_data("amazon")
-    pprint(result)
