@@ -1,7 +1,6 @@
 from openai import OpenAI, OpenAIError
 import os
 from dotenv import load_dotenv
-from utils.google_search import search_google_news
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
@@ -14,9 +13,9 @@ def generate_research(company, financial_data, search_results):
     
     prompt = f"""
 You are a research assistant. The following information regarding {company}'s financials are as follows: {financial_data} 
-The following is some background information for {company}: {search_results}
+The following is background information for {company}: {search_results}
 
-Answer the following questions about {company}.
+Answer the following questions about {company}. Include general information known about the company where relevant.
 
 Top 5 things to know about {company} including top customers for each business unit.
 How is the current geopolitical environment impacting {company}?
@@ -37,8 +36,9 @@ What digital transformation and operational efficiency initiatives did {company}
 Who is responsible for digital transformation, OE/EX/CX within {company}?
 
 
-Do not include any words or phrasing in the output that would imply that you are an AI or that you are unable to answer the questions.
-If you cannot answer any particular question, simply skip it and move on.
+If you cannot answer any particular question, simply skip it and move on. If you cannot answer any of the questions, simply do not respond.
+Do not mention or say that you cannot answer a particular question. Do not justify why you cannot answer any particular question. Do your best
+to answer the questions where possible.
 """
 
     try:
