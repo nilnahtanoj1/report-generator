@@ -35,10 +35,12 @@ What digital transformation and operational efficiency initiatives are planned b
 What digital transformation and operational efficiency initiatives did {company} complete over the past 3 years?
 Who is responsible for digital transformation, OE/EX/CX within {company}?
 
-
 If you cannot answer any particular question, simply skip it and move on. If you cannot answer any of the questions, simply do not respond.
 Do not mention or say that you cannot answer a particular question. Do not justify why you cannot answer any particular question. Do your best
 to answer the questions where possible.
+
+Do not add any header or footer introductions or suggestions (such as 'I am an AI assistant'). The output should exclusively consist of the answers
+to the questions above, and nothing more.
 """
 
     try:
