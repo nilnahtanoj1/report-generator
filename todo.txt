@@ -1,3 +1,1 @@
-finish report generator
-finish summarizer
-finish output template
+connect google query results to full content extraction (newspaper?)
