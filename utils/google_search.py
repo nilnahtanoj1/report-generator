@@ -9,7 +9,6 @@ def search_google_news(query):
     params = {
         "engine": "google",
         "q": query,
-        "gl": "us",
         "api_key": SERPAPI_KEY,
         "tbm": "nws"
     }
@@ -31,7 +30,5 @@ def search_google_news(query):
             f"{snippet}"
         )
         results.append(formatted)
-
-    print(results)
 
     return "\n\n".join(results)
